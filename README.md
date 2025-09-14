@@ -32,13 +32,38 @@ Before using this script, you must have the following installed on your system:
     cd <your-repo-directory>
     ```
 
-2.  **Install Python Dependencies:**
-    This project's dependencies are listed in `requirements.txt`. Install them using `pip`.
+2.  **Create and Activate a Virtual Environment:**
+    It is highly recommended to use a virtual environment to manage project-specific dependencies and avoid conflicts.
+
+    First, ensure the `venv` module is available. The command may vary based on your operating system and Python version. For Debian/Ubuntu-based systems, you can run:
     ```bash
+    # Make sure venv is available (example for Python 3.12)
+    sudo apt install python3.12-venv -y
+    ```
+
+    Next, create the virtual environment within your project directory:
+    ```bash
+    # Create a venv inside your project
+    python3 -m venv .venv
+    ```
+
+    Finally, activate the virtual environment. Your terminal prompt should change to indicate it's active.
+    ```bash
+    # Activate it
+    source .venv/bin/activate
+    ```
+
+3.  **Install Python Dependencies:**
+    With the virtual environment activated, upgrade `pip` and then install the required packages listed in `requirements.txt`.
+    ```bash
+    # Upgrade pip inside the venv
+    pip install --upgrade pip
+
+    # Install dependencies
     pip install -r requirements.txt
     ```
 
-3.  **Install & Authenticate GitHub CLI:**
+4.  **Install & Authenticate GitHub CLI:**
     If you don't have `gh` installed, follow the official instructions for your OS. Once installed, you must authenticate it with a token that has the correct permissions.
 
     Run the following command. It will open a web browser to guide you through the process.
@@ -80,12 +105,16 @@ The script is driven by a CSV file that defines the issue hierarchy. The file **
 ## Usage Guide
 
 1.  **Prepare your CSV file** according to the format specified above.
-2.  **Run the script** from your terminal:
+2.  **Activate the virtual environment** if it is not already active. You can verify this if your terminal prompt is prefixed with `(.venv)`. If not, run:
+    ```bash
+    source .venv/bin/activate
+    ```
+3.  **Run the script** from your terminal:
     ```bash
     python upload_issues_hierarchical.py
     ```
-3.  **Follow the prompts:**
+4.  **Follow the prompts:**
     *   The script will first validate your environment.
     *   It will then ask for the path to your input CSV file.
     *   It will automatically check for a corresponding `_output.csv` file and ask if you want to resume.
-4.  **Check the Results:** After the script finishes, a new file named `[your_input_file]_output.csv` will be created. This file serves as a complete log of the operation, containing either the URL of the created issue or a specific error message in the `github_issue_url` column.
+5.  **Check the Results:** After the script finishes, a new file named `[your_input_file]_output.csv` will be created. This file serves as a complete log of the operation, containing either the URL of the created issue or a specific error message in the `github_issue_url` column.
